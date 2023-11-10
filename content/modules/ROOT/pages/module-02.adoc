@@ -1,151 +1,73 @@
-include::_attributes.adoc[]
+Some files are large enough that it is not practical to display their
+contents with `+cat+`. A common example is log files, which are often
+packed full of information.
 
-= Building an Application with rpms
+Since `+tail+` only displays the last ten lines of a file, it is
+particularly useful for viewing recent entries in log files. Take a look
+at the final ten lines of the _boot_ log.
 
-== Downloading the UBI
-
-In this lab, you will be installing software into the container 
-image running as an interactive application. To do this you will
-need `yum`, but do not need `systemd` for managing services within the
-container environment.  For that reason, you will be using the *Standard*
-UBI image (as opposed to the Minimal or Multi-service images).
-
-Using the "buildah from" command will download and meld the container image. This particular image we are using is the Red Hat Universal Base Image or UBI. From the ourput of the command, you will notice that we are pulling down the latest one, which is for RHEL 9. 
-
-. Execute the  download the Standard UBI
-image from Red Hat's registry.
-
-+
-[source,sh,role=execute]
-----
-buildah from registry.access.redhat.com/ubi9/ubi
-----
-
-[#repositories]
-== Installing Repositories
-In this lab, you are going to containerize a software package that is already
-packaged in RPM format and stored in the Extra Packages for Enterprise Linux
-(EPEL) repository.
-
-Software often has requirements for prerequisite software that must be installed
-on the machine for it to work properly.  `yum` will resolve those
-dependencies for you, as long as it can locate the required packages in
-repositories defined on the machine.  The Red Hat Universal Base Image (UBI)
-downloaded in the previous step has access to some Red Hat Enterprise Linux
-repositories.  However, the target package for the lab is from EPEL.  
-
-. In the command below, `buildah` is going to run a command on the
-`ubi-working-container` image.  The `--` indicates that the command should be
-executed from within the container, which means the results will be applied into
-the container image.  Lastly, you are providing the `yum` command to install a
-package that defines all of the repositories from EPEL, `epel-release-latest-9`.
-
-+
 [source,bash]
 ----
-buildah run ubi-working-container -- yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+tail /var/log/audit/audit.log
 ----
 
-
-. You can verify that the above command did not install the RPM on the host system.
-
-+
 [source,bash]
 ----
-rpm -q epel-release
+type=SERVICE_STOP msg=audit(1654785357.108:201): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=SERVICE_STOP msg=audit(1654785357.127:202): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user-runtime-dir@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=ADD_GROUP msg=audit(1654785383.760:203): pid=1576 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
+type=ADD_GROUP msg=audit(1654785443.806:204): pid=1587 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
+type=ADD_GROUP msg=audit(1654785503.853:205): pid=1591 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
 ----
 
-NOTE: If your repository configurations are not distributed as an RPM, but instead as
-individual `.repo` files, you could use the `buildah copy` command to copy
-files from the host operating system into the container image.  You will see
-an example of using `buildah copy` later in this lab.
+If you wish to then see the entire file, a text viewer like `+less+` or
+`+view+` will show the entire file.
 
-[#software]
-== Installing Software
+Adding the `+-f+` option will follow the log file so that you can see
+new entries.
 
-
-. Now that the yum repositories are defined within the container, execute 
-another `yum install`, within the container, to install the target
-software: `moon-buggy`.
-
-+
 [source,bash]
 ----
-buildah run ubi-working-container -- yum -y install moon-buggy
+tail -f /var/log/messages
 ----
 
-
-== Committing the Container Image
-
-. At this point, the container is configured.  It is time to transition from a
-working container into a committed image.  In the command below, you will use
-the `buildah` command to commit the working container to an image called:
-`moon-buggy`.
-
-+
 [source,bash]
 ----
-buildah commit ubi-working-container moon-buggy
+<< OUTPUT ABRIDGED >>
+Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <warn>  [1626403046.8294] device (ens5): Activation: failed for connection 'Wired connection 1'
+Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8298] device (ens5): state change: failed -> disconnected (reason 'none', sys-iface-state: 'managed')
+Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): canceled DHCP transaction
+Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): state changed timeout -> done
 ----
 
-+
-. The output of `podman image list` should confirm the image was created.
+Enter Ctrl-c to break out of this stream.
 
-+
+Dec 8 18:37:15 rhel systemd[1]: Started man-db-cache-update.service. Dec
+8 18:37:15 rhel systemd[1]:
+run-rcd7035fb3d1d4176bf081e5732f65f65.service: Succeeded. ^C
+
+....
+
+The `logger` utility will write to this _messages_ log. From the original terminal,
+write to this log:
+
+```bash
+logger Hello World
+....
+
+Check that this message was recorded.
+
 [source,bash]
 ----
-podman image list
+tail /var/log/messages
 ----
 
-
-== Deploy the Container
-
-Now the software has been installed and a new container image created.  It is
-time to spawn a runtime of the container image and validate the software.  The
-software we are using is a command line command.  
-
-. When you `run` the container,
-it will be in interactive (`-it`) mode, based on the `moon-buggy` container
-image and the command run interactively will be `/usr/bin/moon-buggy`.
-
-+
 [source,bash]
 ----
-podman run -it moon-buggy /usr/bin/moon-buggy
+Jul 15 22:39:06 6d5380e16498 dnf[3679]: Metadata cache created.
+Jul 15 22:39:06 6d5380e16498 systemd[1]: dnf-makecache.service: Succeeded.
+Jul 15 22:39:06 6d5380e16498 systemd[1]: Started dnf makecache.
+Jul 15 22:42:07 6d5380e16498 root[3693]: Hello World
 ----
 
-+
-[source,textinfo]
-----
-
-<<< OUTPUT ABRIDGED >>>
-               MM     MM   OOOOO    OOOOO   NN     N
-               M M   M M  O     O  O     O  N N    N
-               M  M M  M  O     O  O     O  N  N   N
-               M   M   M  O     O  O     O  N   N  N
-               M       M  O     O  O     O  N    N N
-               M       M   OOOOO    OOOOO   N     NN
-
-                     BBBBBB   U     U   GGGGG    GGGGG   Y     Y
-                     B     B  U     U  G     G  G     G   Y   Y
-                     BBBBBB   U     U  G        G          Y Y
-                     B     B  U     U  G   GGG  G   GGG     Y
-                     B     B  U     U  G     G  G     G    Y
-                     BBBBBB    UUUUU    GGGGG    GGGGG   YY
-
-<<< OUTPUT ABRIDGED >>>
-----
-
-. You can now play the Moon Buggy game, which is a text-based version of the
-popular Moon Patrol.  When you are finished, use the `q` command to quit the
-game, which will terminate the container.
-
-+
-Alternatively, you can use `podman` to kill the running container from
-*Terminal 2*.
-
-+
-[source,bash]
-----
-podman kill $(podman ps | grep -v CONTAINER | cut -f1 -d" " )
-----
+The message you just sent with `+logger+` is present in _messages_.

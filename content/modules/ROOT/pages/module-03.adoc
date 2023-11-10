@@ -1,141 +1,96 @@
-include::_attributes.adoc[]
+Manipulating files is only useful if you can locate the file you need.
+This step will walk you through two commands that are useful for this,
+`+locate+` and `+find+`.
 
+The `+find+` command is great for searching for files which satisfy some
+specified criteria. This step will show an example using the filename,
+but you can also use it to look for files with certain permissions,
+empty files, or much more.
 
-= Managing an Application from GitHub
-
-In the first half of this workshop, we packaged an application into this portable container format manually using rpms.
-In the second half, we will consider that you may want to manage software from GitHub or some kind of software versioning application.
-Rather than installing rpms, we have individual software files and pull them out of that version control into a group of systems.
-
-== Install RHEL 8 UBI
-
-In this lab, we will be using a different Red Hat Enterprise Linux version in my container. 
-
-. Verify the host system release 
-
-+
 [source,bash]
 ----
-cat /etc/redhat-release
+find / -name messages
 ----
-+ 
-NOTE: The `bastion` system is Red Hat Enterprise Linux 9, and when you built the previous container, you used the UBI9 image. This means both the image and the container were built off the same Red Hat Enterprise Linux packages. 
 
-. As we did previously in this lab, Use `buildah from` to pull down the Red Hat Enterprise Linux 8 UBI.
-
-+
 [source,bash]
 ----
-buildah from registry.access.redhat.com/ubi8/ubi
+/var/log/messages
 ----
 
-NOTE: Because you already pulled one image named `ubi-working-container` this one is called `ubi-working-container-1`. 
+The output is the full path to the file. If there are multiple matches,
+then this output would have multiple lines and it would be up to the
+user to decide which is the appropriate file. Instead of having to
+search through countless directories, you can quickly locate the file.
 
-[#prerequisites]
-== Install Prerequisites
+____
+_Note:_ An in-depth explanation of using `+find+` to sort by file
+permissions is included in the
+https://lab.redhat.com/file-permissions[File Permissions Basics lab].
+____
 
-Now that you have a working container, you will use the same process as before installing all the prerequisites, changing config files, and manipulating the contents of this container to be in the desired state.
+`+find+` can be input/output intensive, which can sap system resources,
+especially if you run a search that will scan a large amount of
+candidate files. In fact, the search above is exactly that kind of
+search, since it is looking for filenames starting from the root
+directory. It will check every single file on the entire system to see
+if it is a match. The `+locate+` command instead queries a database to
+avoid being too I/O intensive.
 
-The software you will install is a JavaScript-based game that runs on a web browser. As before in the lab, use dnf to install software inside the container. 
-
-. Use `buildah run` and install Apache (`httpd`) into the `ubi-working-container-1` container. 
-+
 [source,bash]
 ----
-buildah run ubi-working-container-1 -- dnf -y install httpd
+locate messages
 ----
 
-== Enable Service
-
-The next thing to do is to use a systemctl to enable the service. The ubi-init provides full systemd service to the container.
-This will start up any of the services that are enabled. 
-
-. Enable the `httpd` service using `buildah run`
-
-+
 [source,bash]
 ----
-buildah run ubi-working-container-1 -- systemctl enable httpd
+<< OUTPUT ABRIDGED >>
+/usr/share/vim/vim80/syntax/messages.vim
+/usr/share/vim/vim80/syntax/msmessages.vim
+/var/log/messages
 ----
 
-NOTE: The UBI standard image doesn't have systemd installed on it by default. The `ubi-init` container image does include systemd. Plan accordingly to which image you use to build applications.  
+This command finds a variety of files containing _messages_ in their
+name, including the log file that you are looking for,
+`+/var/log/messages+`. The database that `+locate+` uses to optimize the
+search process is updated once per day by default, so that means if you
+are trying to locate a newly created file it will not be present in the
+database.
 
-== Explore Source Materials
+Create a new file with `+touch+`:
 
-A GitHub repository has already been synchronized to `/home/devops/clumsy-bird/` This repository contains the configurations for your application.
-
-. Verify the repository is cloned inside the `/home/devops/` directory
-+
 [source,bash]
 ----
-cd /home/devops/
+touch newFile
 ----
 
-+
+Try to find this newly created file using `+locate+`:
+
 [source,bash]
 ----
-git clone https://github.com/ellisonleao/clumsy-bird
-----
-+
-NOTE: The output states that the software has already been checked out. 
-+
-. Explore the JavaScript contents, index files, and everything else that we need for this web-based JavaScript software.
-+
-[source,bash,role=execute]
-----
-ls clumsy-bird
+locate newFile
 ----
 
-== Add Source Materials to Container
+There will be no output, as _newFile_ is not in the `+locate+` database.
+Update the `+locate+` database using the `+updatedb+` command:
 
-. Now that you have verified the source materials exist, you will put the software inside of my container image using the `buildah copy` command.
-+
 [source,bash]
 ----
-buildah copy ubi-working-container-1 clumsy-bird /var/www/html
+updatedb
 ----
 
-[#container]
-== Enable Container in Background
+Re-run the `+locate+` command to look through the newly updated
+database:
 
-In the previous section of this lab, you ran the game natively through interactive mode. Because you are now building a web application you will need to run the container in the background and access it through a web address. 
-
-. Execute `buildah config` to specify a port and initialize the container. 
-
-+
 [source,bash]
 ----
-buildah config --port 80 --cmd "/usr/sbin/init" ubi-working-container-1
+locate newFile
 ----
 
-NOTE: The command makes a configuration change to this container. I'm configuring this container to accept connections to its port 80. When the container starts up, it should run the init command, which, in this case, is going to be the Apache daemon right from earlier when I enabled it.
-
-== Commit Container and Deploy
-
-. Now that we have a container in a working configured state, it is time to make that permanent by committing it to a container image called `clumsy-bird`
-+
 [source,bash]
 ----
-buildah commit ubi-working-container-1 clumsy-bird
+/root/newFile
 ----
 
-. Verify that the image was created with `podman`
-+
-[source,bash]
-----
-podman images
-----
-+
-. Run the container Now it's time to run the container. 
-+
-[source,bash]
-----
-podman run -d -p 8500:80 clumsy-bird
-----
-
-== Verify Application
-
-Verify that the application is running by navigating to
-
-http://bastion.{guid}.example.opentlc.com:8500
-
+Now the file is present. This is important to keep in mind so that you
+do not run into the frustrating situation where `+locate+` failed to
+find a file that existed all along.
