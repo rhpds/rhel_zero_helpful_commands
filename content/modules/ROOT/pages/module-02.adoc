@@ -1,73 +1,46 @@
-Some files are large enough that it is not practical to display their
-contents with `+cat+`. A common example is log files, which are often
-packed full of information.
+= Setting the Account Password
 
-Since `+tail+` only displays the last ten lines of a file, it is
-particularly useful for viewing recent entries in log files. Take a look
-at the final ten lines of the _boot_ log.
+Like with `+useradd+`, you must have root access to use this command.
+Set the password for the guest account you created in the previous step
+using the following command:
 
 [source,bash]
 ----
-tail /var/log/audit/audit.log
+echo rhel | passwd --stdin guest
 ----
+
+This command will set the password in one line by using the `+--stdin+`
+option. This is useful when setting passwords inside a script or any
+other case when you want to avoid interactively setting the password. If
+you instead call `+passwd guest+`, you get a chance to type the password
+interactively to set it.
+
+Here you use a four-character password for simplicity, but it is best
+practice to select a more secure password. In fact, non-root users would
+be unable to use the password *rhel* for their account because it is too
+short and does not contain a number or uppercase letter. Root users can
+bypass these guidelines if they wish.
+
+Validate the password by using the list (`+-l+`) option for the
+`+chage+` command:
 
 [source,bash]
 ----
-type=SERVICE_STOP msg=audit(1654785357.108:201): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
-type=SERVICE_STOP msg=audit(1654785357.127:202): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user-runtime-dir@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785383.760:203): pid=1576 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785443.806:204): pid=1587 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785503.853:205): pid=1591 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
+chage -l guest
 ----
 
-If you wish to then see the entire file, a text viewer like `+less+` or
-`+view+` will show the entire file.
+This outputs useful information about when the password was last
+changed, when the password expires, and how long the user will have to
+change their password before it becomes inactive.
 
-Adding the `+-f+` option will follow the log file so that you can see
-new entries.
+____
+_NOTE:_ You can view this same information with the `+passwd+` command
+using various options, but `+chage -l+` provides it in a much more
+human-readable and concise format.
+____
 
-[source,bash]
-----
-tail -f /var/log/messages
-----
-
-[source,bash]
-----
-<< OUTPUT ABRIDGED >>
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <warn>  [1626403046.8294] device (ens5): Activation: failed for connection 'Wired connection 1'
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8298] device (ens5): state change: failed -> disconnected (reason 'none', sys-iface-state: 'managed')
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): canceled DHCP transaction
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): state changed timeout -> done
-----
-
-Enter Ctrl-c to break out of this stream.
-
-Dec 8 18:37:15 rhel systemd[1]: Started man-db-cache-update.service. Dec
-8 18:37:15 rhel systemd[1]:
-run-rcd7035fb3d1d4176bf081e5732f65f65.service: Succeeded. ^C
-
-....
-
-The `logger` utility will write to this _messages_ log. From the original terminal,
-write to this log:
-
-```bash
-logger Hello World
-....
-
-Check that this message was recorded.
-
-[source,bash]
-----
-tail /var/log/messages
-----
-
-[source,bash]
-----
-Jul 15 22:39:06 6d5380e16498 dnf[3679]: Metadata cache created.
-Jul 15 22:39:06 6d5380e16498 systemd[1]: dnf-makecache.service: Succeeded.
-Jul 15 22:39:06 6d5380e16498 systemd[1]: Started dnf makecache.
-Jul 15 22:42:07 6d5380e16498 root[3693]: Hello World
-----
-
-The message you just sent with `+logger+` is present in _messages_.
+You can use the `+passwd+` command for many more actions, such as
+setting an expiration date or locking users from logging in with their
+password. Check out the Enable Sysadmin article
+https://www.redhat.com/sysadmin/managing-users-passwd[Managing Linux
+users with the passwd command] for more information on these actions.

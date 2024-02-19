@@ -1,96 +1,65 @@
-Manipulating files is only useful if you can locate the file you need.
-This step will walk you through two commands that are useful for this,
-`+locate+` and `+find+`.
+= Adding Groups
 
-The `+find+` command is great for searching for files which satisfy some
-specified criteria. This step will show an example using the filename,
-but you can also use it to look for files with certain permissions,
-empty files, or much more.
+Create a group called *viewers* using the `+groupadd+` command. You will
+use the `+-g+` option to specify a group ID (GID), in this case 10000:
 
 [source,bash]
 ----
-find / -name messages
+groupadd -g 10000 viewers
 ----
-
-[source,bash]
-----
-/var/log/messages
-----
-
-The output is the full path to the file. If there are multiple matches,
-then this output would have multiple lines and it would be up to the
-user to decide which is the appropriate file. Instead of having to
-search through countless directories, you can quickly locate the file.
 
 ____
-_Note:_ An in-depth explanation of using `+find+` to sort by file
-permissions is included in the
-https://lab.redhat.com/file-permissions[File Permissions Basics lab].
+_NOTE:_ Every time a new user is created, there is a primary group that
+is automatically generated for the user. When creating your own group,
+it is best practice to specify a GID that leaves room for primary groups
+to be be generated with the same ID as the user account. New user IDs
+are typically generated ascending from 1000. Selecting a GID of 10000 in
+this example ensures that new user accounts will have ample space to
+generate their own primary group IDs that are equivalent to their user
+ID.
 ____
 
-`+find+` can be input/output intensive, which can sap system resources,
-especially if you run a search that will scan a large amount of
-candidate files. In fact, the search above is exactly that kind of
-search, since it is looking for filenames starting from the root
-directory. It will check every single file on the entire system to see
-if it is a match. The `+locate+` command instead queries a database to
-avoid being too I/O intensive.
+Search for the group name in the `+/etc/group+` file to confirm this was
+successful:
 
 [source,bash]
 ----
-locate messages
+grep -w viewers /etc/group
 ----
+
+This file shows the group name, the GID, and which users belong to the
+group. In this case, *viewers* does not yet have any users associated
+with it, but you can see the custom GID of 10000 was successfully set.
+Now you will see how to add users to this group.
+
+== Adding users to a group
+
+Now that you have created this group, add the *guest* user from the
+previous step to the *viewers* group using `+usermod+`. You will use the
+secondary group option (`+-G+`) in conjunction with the append option
+(`+-a+`) to add *viewers* without overwriting any existing groups
+associated with *guest*.
 
 [source,bash]
 ----
-<< OUTPUT ABRIDGED >>
-/usr/share/vim/vim80/syntax/messages.vim
-/usr/share/vim/vim80/syntax/msmessages.vim
-/var/log/messages
+usermod -aG viewers guest
 ----
 
-This command finds a variety of files containing _messages_ in their
-name, including the log file that you are looking for,
-`+/var/log/messages+`. The database that `+locate+` uses to optimize the
-search process is updated once per day by default, so that means if you
-are trying to locate a newly created file it will not be present in the
-database.
-
-Create a new file with `+touch+`:
+The `+groups+` command is useful for validating this change, because it
+lists all groups associated with a user:
 
 [source,bash]
 ----
-touch newFile
+groups guest
 ----
 
-Try to find this newly created file using `+locate+`:
+The *viewers* group has been added alongside the account’s primary group
+(*guest*).
 
-[source,bash]
-----
-locate newFile
-----
-
-There will be no output, as _newFile_ is not in the `+locate+` database.
-Update the `+locate+` database using the `+updatedb+` command:
-
-[source,bash]
-----
-updatedb
-----
-
-Re-run the `+locate+` command to look through the newly updated
-database:
-
-[source,bash]
-----
-locate newFile
-----
-
-[source,bash]
-----
-/root/newFile
-----
-
-Now the file is present. This is important to keep in mind so that you
-do not run into the frustrating situation where `+locate+` failed to
-find a file that existed all along.
+____
+_NOTE:_ Using the secondary group option (`+-G+`) adds *viewers* as a
+_secondary group_ for the *guest* user. Users can have any number of
+secondary groups. If you instead wanted to replace the primary group for
+*guest*, use `+-g+` when calling `+groupadd+`. You cannot use `+-a+` to
+append a primary group, as users can only have one primary group.
+____
