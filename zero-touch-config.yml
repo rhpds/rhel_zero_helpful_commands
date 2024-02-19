@@ -14,6 +14,10 @@ antora:
       label: Module 4
     - name: module-05
       label: Module 5
+    - name: module-06
+      label: Module 6
+    - name: module-07
+      label: Module 7
 
 tabs:
   - name: terminal
