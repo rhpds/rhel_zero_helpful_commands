@@ -13,11 +13,14 @@ tail /var/log/audit/audit.log
 
 [source,bash]
 ----
-type=SERVICE_STOP msg=audit(1654785357.108:201): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
-type=SERVICE_STOP msg=audit(1654785357.127:202): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=user-runtime-dir@0 comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785383.760:203): pid=1576 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785443.806:204): pid=1587 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
-type=ADD_GROUP msg=audit(1654785503.853:205): pid=1591 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:unconfined_service_t:s0 msg='op=add-group acct="google-sudoers" exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=failed'UID="root" AUID="unset"
+type=SERVICE_START msg=audit(1718709479.839:3949): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=systemd-hostnamed comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=BPF msg=audit(1718709485.013:3950): prog-id=154 op=LOAD
+type=SERVICE_START msg=audit(1718709485.167:3951): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=nm-cloud-setup comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=SERVICE_STOP msg=audit(1718709485.167:3952): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=nm-cloud-setup comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=BPF msg=audit(1718709485.174:3953): prog-id=0 op=UNLOAD
+type=SERVICE_STOP msg=audit(1718709509.874:3954): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=systemd-hostnamed comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
+type=BPF msg=audit(1718709509.900:3955): prog-id=0 op=UNLOAD
+type=BPF msg=audit(1718709509.900:3956): prog-id=0 op=UNLOAD
 ----
 
 If you wish to then see the entire file, a text viewer like `+less+` or
@@ -34,26 +37,22 @@ tail -f /var/log/messages
 [source,bash]
 ----
 << OUTPUT ABRIDGED >>
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <warn>  [1626403046.8294] device (ens5): Activation: failed for connection 'Wired connection 1'
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8298] device (ens5): state change: failed -> disconnected (reason 'none', sys-iface-state: 'managed')
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): canceled DHCP transaction
-Jul 15 22:37:26 6d5380e16498 NetworkManager[886]: <info>  [1626403046.8343] dhcp4 (ens5): state changed timeout -> done
+Jun 18 11:23:05 localhost systemd[30108]: Finished Cleanup of User's Temporary Files and Directories.
+Jun 18 11:23:05 localhost systemd[1]: systemd-tmpfiles-clean.service: Deactivated successfully.
+Jun 18 11:23:05 localhost systemd[1]: Finished Cleanup of Temporary Directories.
+Jun 18 11:23:05 localhost systemd[30111]: Finished Cleanup of User's Temporary Files and Directories.
+Jun 18 11:23:05 localhost systemd[1]: run-credentials-systemd\x2dtmpfiles\x2dclean.service.mount: Deactivated successfully.
 ----
 
 Enter Ctrl-c to break out of this stream.
 
-Dec 8 18:37:15 rhel systemd[1]: Started man-db-cache-update.service. Dec
-8 18:37:15 rhel systemd[1]:
-run-rcd7035fb3d1d4176bf081e5732f65f65.service: Succeeded. ^C
-
-....
-
 The `logger` utility will write to this _messages_ log. From the original terminal,
 write to this log:
 
-```bash
+[source,bash]
+----
 logger Hello World
-....
+----
 
 Check that this message was recorded.
 
@@ -64,10 +63,11 @@ tail /var/log/messages
 
 [source,bash]
 ----
-Jul 15 22:39:06 6d5380e16498 dnf[3679]: Metadata cache created.
-Jul 15 22:39:06 6d5380e16498 systemd[1]: dnf-makecache.service: Succeeded.
-Jul 15 22:39:06 6d5380e16498 systemd[1]: Started dnf makecache.
-Jul 15 22:42:07 6d5380e16498 root[3693]: Hello World
+Jun 18 11:23:05 localhost systemd[1]: Finished Automatically configure NetworkManager in cloud.
+Jun 18 11:29:05 localhost systemd[1]: Starting Automatically configure NetworkManager in cloud...
+Jun 18 11:29:05 localhost systemd[1]: nm-cloud-setup.service: Deactivated successfully.
+Jun 18 11:29:05 localhost systemd[1]: Finished Automatically configure NetworkManager in cloud.
+Jun 18 11:34:27 localhost root[30360]: Hello World
 ----
 
 The message you just sent with `+logger+` is present in _messages_.

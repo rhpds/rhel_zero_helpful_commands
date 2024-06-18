@@ -12,15 +12,16 @@ ps aux
 
 [source,bash]
 ----
-root           1  0.0  0.7 186400 14448 ?        Ss   15:38   0:11 /usr/lib/systemd/systemd --switched-root --system --deserialize 17
-root           2  0.0  0.0      0     0 ?        S    15:38   0:00 [kthreadd]
-root           3  0.0  0.0      0     0 ?        I<   15:38   0:00 [rcu_gp]
-root           4  0.0  0.0      0     0 ?        I<   15:38   0:00 [rcu_par_gp]
-root           6  0.0  0.0      0     0 ?        I<   15:38   0:00 [kworker/0:0H-events_highpri]
-root           9  0.0  0.0      0     0 ?        I<   15:38   0:00 [mm_percpu_wq]
-root          10  0.0  0.0      0     0 ?        S    15:38   0:00 [ksoftirqd/0]
-root          11  0.0  0.0      0     0 ?        I    15:38   0:00 [rcu_sched]
-
+root           1  0.3  0.4 173728 17912 ?        Ss   11:08   0:08 /usr/lib/systemd/systemd --system --deserialize 30
+root           2  0.0  0.0      0     0 ?        S    11:08   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   11:08   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   11:08   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   11:08   0:00 [slub_flushwq]
+root           6  0.0  0.0      0     0 ?        I<   11:08   0:00 [netns]
+root           8  0.0  0.0      0     0 ?        I<   11:08   0:00 [kworker/0:0H-events_highpri]
+root           9  0.0  0.0      0     0 ?        I    11:08   0:01 [kworker/u4:0-events_unbound]
+root          10  0.0  0.0      0     0 ?        I<   11:08   0:00 [kworker/0:1H-events_highpri]
+root          11  0.0  0.0      0     0 ?        I<   11:08   0:00 [mm_percpu_wq]
 << OUTPUT ABRIDGED >>
 ----
 
@@ -44,8 +45,8 @@ ps aux | grep sshd
 
 [source,bash]
 ----
-root        1441  0.0  0.2  16120  9688 ?        Ss   14:35   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
-root        1708  0.0  0.0   6412  2116 pts/0    S+   14:47   0:00 grep --color=auto sshd
+root       27619  0.0  0.2  15784  9292 ?        Ss   11:13   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root       31514  0.0  0.0   6408  2172 pts/0    S+   11:55   0:00 grep --color=auto sshd
 ----
 
 Here the search finds the `+sshd+` process, but the second line of this
@@ -62,18 +63,17 @@ top
 
 [source,bash]
 ----
-top - 21:11:07 up  4:10,  2 users,  load average: 0.45, 0.16, 0.06
-Tasks: 114 total,   1 running, 113 sleeping,   0 stopped,   0 zombie
-%Cpu(s):  0.0 us,  0.3 sy,  0.0 ni, 99.3 id,  0.2 wa,  0.2 hi,  0.0 si,  0.0 st
-MiB Mem :   1817.0 total,   1135.0 free,    181.5 used,    500.5 buff/cache
-MiB Swap:   4000.0 total,   4000.0 free,      0.0 used.   1482.2 avail Mem
+top - 11:57:25 up 49 min,  2 users,  load average: 0.00, 0.00, 0.01
+Tasks: 140 total,   1 running, 139 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.5 us,  0.3 sy,  0.0 ni, 98.7 id,  0.0 wa,  0.2 hi,  0.0 si,  0.3 st
+MiB Mem :   3614.2 total,    889.7 free,    954.2 used,   2070.4 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.   2660.0 avail Mem 
 
-  PID USER    PR  NI   VIRT   RES   SHR S %CPU %MEM    TIME+ COMMAND
- 2940 root    20  0       0     0     0 I  0.3  0.0  0:00.01 kworker/u4:2-flush-253:0
-15893 root    20  0   65416  4736  3952 R  0.3  0.3  0:00.04 top
-    1 root    20  0  187008  4968  9800 S  0.0  0.8  0:03.06 systemd
-    2 root    20  0       0     0     0 S  0.0  0.0  0:00.01 kthreadd
-    3 root     0 -20      0     0     0 I  0.0  0.0  0:00.00 rcu_gp
+PID   USER      PR   NI   VIRT   RES   SHR   S   %CPU  %MEM  TIME+   COMMAND
+29962 showroom  20   0   10.3g  66244  39004 S   0.7   1.8   0:11.48 node
+29602 showroom  20   0 1358008  65540  35144 S   0.3   1.8   0:05.70 podman
+30062 showroom  20   0   10.3g  67012  39040 S   0.3   1.8   0:10.93 node
+    1 root      20   0  173728  17912  11016 S   0.0   0.5   0:08.70 systemd
 ----
 
 In addition to the process info, `+top+` includes some status
