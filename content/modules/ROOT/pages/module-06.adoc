@@ -1,3 +1,5 @@
+=== Viewing processes
+
 Just as files organize how data is stored on Linux, processes organize
 all of the programs that are running on the system. The `+ps+` command
 (short for Process Status) will display information about the processes
@@ -5,7 +7,7 @@ running in the current shell. To see all of the processes running on the
 system and present them in a user-readable format, it is common to add
 the `+aux+` options to `+ps+`.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 ps aux
 ----
@@ -38,7 +40,7 @@ operator (`+|+`), pipe the output of `+ps aux+` into the `+grep+`
 command to search for a specific process. Search for the `+sshd+`
 process.:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 ps aux | grep sshd
 ----
@@ -56,7 +58,7 @@ output shows that the search also finds itself.
 resource usage, but sometimes it is more useful to have a utility that
 keeps updating this information in real time. `+top+` does just that.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 top
 ----

@@ -1,3 +1,5 @@
+=== Using 'df' to check disk usage
+
 A large part of a system administrator’s job is to be able to diagnose
 what is causing a system to misbehave. Disk space being full can lead to
 unexpected behavior, so the `+df+` command is great to include in any
@@ -7,7 +9,7 @@ The `+df+` command, short for "`disk free`", shows a breakdown of disk
 usage. The `+-h+` option will present the sizes in a human readable
 format:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 df -h
 ----

@@ -1,3 +1,5 @@
+=== Locating Files
+
 Manipulating files is only useful if you can locate the file you need.
 This step will walk you through two commands that are useful for this,
 `+locate+` and `+find+`.
@@ -7,7 +9,7 @@ specified criteria. This step will show an example using the filename,
 but you can also use it to look for files with certain permissions,
 empty files, or much more.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 find / -name messages
 ----
@@ -36,7 +38,7 @@ directory. It will check every single file on the entire system to see
 if it is a match. The `+locate+` command instead queries a database to
 avoid being too I/O intensive. Use `+updatedb+` to immediately build the database.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 updatedb
 locate messages
@@ -59,14 +61,14 @@ database.
 
 Create a new file with `+touch+`:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 touch newFile
 ----
 
 Try to find this newly created file using `+locate+`:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 locate newFile
 ----
@@ -74,7 +76,7 @@ locate newFile
 There will be no output, as _newFile_ is not in the `+locate+` database.
 Update the `+locate+` database again using the `+updatedb+` command:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 updatedb
 ----
@@ -82,7 +84,7 @@ updatedb
 Re-run the `+locate+` command to look through the newly updated
 database:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 locate newFile
 ----

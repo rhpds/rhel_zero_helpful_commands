@@ -1,8 +1,10 @@
+=== Using 'free' to view information about the system memory usage
+
 Processes require memory to run, so when the system is running low on
 free memory it can slow down significantly. The `+free+` command is
 useful for quickly getting a summary of memory usage.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 free -h
 ----
@@ -19,7 +21,7 @@ Swap: 0B     0B     0B
 Let’s launch `+top+` again but this time we’ll run it in the background
 by adding a `+&+`.
 
-[source,bash]
+[source,bash,role=execute]
 ----
 top &
 ----
@@ -34,7 +36,7 @@ If the available memory is very low, the fourth column of `+ps au+` can
 be used for finding which processes are the culprits. To sort the output
 by memory usage, add the `+--sort=-%mem+` option:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 ps au --sort=-%mem
 ----
@@ -58,7 +60,7 @@ to use the `+kill+` command. The process ID shown in the `+ps+` output
 is how you refer to the process when killing it. Kill the `+top+`
 process from this terminal:
 
-[source,bash]
+[source,bash,role=execute]
 ----
 kill -9 $(pidof top)
 ----
@@ -67,15 +69,15 @@ Here’s what you should see in the terminal.
 
 [source,bash]
 ----
-root@rhel:~# ps -au
+root@bastion:~# ps -au
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         820  0.0  0.0  13656  1716 tty1     Ss+  18:33   0:00 /sbin/agetty -o -p -- \u --nocl
 root         821  0.0  0.0  16224  2060 ttyS0    Ss+  18:33   0:00 /sbin/agetty -o -p -- \u --keep
 root        2533  0.0  0.1  26112  3760 pts/0    Ss   18:48   0:00 /bin/bash
 root        2696  0.0  0.1  51632  3812 pts/0    T    18:52   0:00 top
 root        2698  0.0  0.1  58728  3944 pts/0    R+   18:53   0:00 ps -au
-root@rhel:~# kill -9 2696
-root@rhel:~# ps -au
+root@bastion:~# kill -9 2696
+root@bastion:~# ps -au
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         820  0.0  0.0  13656  1716 tty1     Ss+  18:33   0:00 /sbin/agetty -o -p -- \u --nocl
 root         821  0.0  0.0  16224  2060 ttyS0    Ss+  18:33   0:00 /sbin/agetty -o -p -- \u --keep
