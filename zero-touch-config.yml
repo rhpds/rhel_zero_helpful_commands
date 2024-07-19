@@ -5,19 +5,19 @@ antora:
   dir: www
   modules:
     - name: index
-      label: Module 1
+      label: Manipulating File Contents
     - name: module-02
-      label: Module 2
+      label: Viewing the end of log files with 'tail'
     - name: module-03
-      label: Module 3
+      label: Locating Files
     - name: module-04
-      label: Module 4
+      label: Searching for text within files and outputs
     - name: module-05
-      label: Module 5
+      label: Using 'df' to check disk usage
     - name: module-06
-      label: Module 6
+      label: Viewing processes
     - name: module-07
-      label: Module 7
+      label: Using 'free' to view information about the system memory usage
 
 tabs:
   - name: ">_ root"
