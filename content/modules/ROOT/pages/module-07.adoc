@@ -62,7 +62,7 @@ process from this terminal:
 
 [source,bash,role=execute]
 ----
-kill -9 $(pidof top)
+kill $(pidof top)
 ----
 
 Here’s what you should see in the terminal.

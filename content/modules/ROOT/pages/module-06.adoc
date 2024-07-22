@@ -49,10 +49,10 @@ ps aux | grep sshd
 ----
 root       27619  0.0  0.2  15784  9292 ?        Ss   11:13   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
 root       31514  0.0  0.0   6408  2172 pts/0    S+   11:55   0:00 grep --color=auto sshd
+<< Output Abridged >>
 ----
 
-Here the search finds the `+sshd+` process, but the second line of this
-output shows that the search also finds itself.
+Here the search finds the `+sshd+` process, the output also shows the command running the search signified by `grep --color=auto sshd`.
 
 `+ps+` is great for showing a snapshot of the active processes and their
 resource usage, but sometimes it is more useful to have a utility that
@@ -78,11 +78,14 @@ PID   USER      PR   NI   VIRT   RES   SHR   S   %CPU  %MEM  TIME+   COMMAND
     1 root      20   0  173728  17912  11016 S   0.0   0.5   0:08.70 systemd
 ----
 
-In addition to the process info, `+top+` includes some status
-information: * The system uptime * Total number of user accounts * 1
-minute, 5 minute, and 15 minute load averages * The total number of
-tasks and a breakdown of their status counts * The kinds of tasks using
-the CPU * A breakdown of memory and swap usage
+In addition to the process info, `+top+` includes some status information:
+
+* The system uptime
+* Total number of user accounts
+* 1 minute, 5 minute, and 15 minute load averages
+* The total number of tasks and a breakdown of their status counts
+* The kinds of tasks using the CPU
+* A breakdown of memory and swap usage
 
 ____
 _NOTE:_ For more information on the `+top+` preamble, visit section 2 of
