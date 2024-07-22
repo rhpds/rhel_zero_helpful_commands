@@ -52,7 +52,8 @@ root       31514  0.0  0.0   6408  2172 pts/0    S+   11:55   0:00 grep --color=
 << Output Abridged >>
 ----
 
-Here the search finds the `+sshd+` process, the output also shows the command running the search signified by `grep --color=auto sshd`.
+Here the search finds the `+sshd+` process,
+the output also shows the command running the search signified by `grep --color=auto sshd`.
 
 `+ps+` is great for showing a snapshot of the active processes and their
 resource usage, but sometimes it is more useful to have a utility that
