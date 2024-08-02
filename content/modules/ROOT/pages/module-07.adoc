@@ -11,7 +11,7 @@ free -h
 
 The `+-h+` option outputs the information in a human-readable format.
 
-[source,bash]
+[source,text]
 ----
       total  used   free   shared  buff/cache  available
 Mem:  3.5Gi  954Mi  889Mi  11Mi    2.0Gi       2.6Gi
@@ -26,7 +26,7 @@ by adding a `+&+`.
 top &
 ----
 
-[source,bash]
+[source,text]
 ----
 top &
 [1] 31588
@@ -41,7 +41,7 @@ by memory usage, add the `+--sort=-%mem+` option:
 ps au --sort=-%mem
 ----
 
-[source,bash]
+[source,text]
 ----
 ps -au --sort=-%mem
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
@@ -67,7 +67,7 @@ kill $(pidof top)
 
 Here’s what you should see in the terminal.
 
-[source,bash]
+[source,text]
 ----
 root@bastion:~# ps -au
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND

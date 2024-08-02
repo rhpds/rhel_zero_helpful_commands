@@ -13,7 +13,7 @@ _/var/log_ that contain the string "`Hello World`".
 grep -r "Hello World" /var/log
 ----
 
-[source,bash]
+[source,text]
 ----
 /var/log/messages:Jul 16 21:38:22 be3f7e9f7264 root[24468]: Hello World
 ----
@@ -29,7 +29,7 @@ case-insensitive search, add the `+-i+` option.
 grep -ir "hello world" /var/log
 ----
 
-[source,bash]
+[source,text]
 ----
 /var/log/messages:Jul 16 21:38:22 be3f7e9f7264 root[24468]: Hello World
 ----
@@ -47,7 +47,7 @@ result of the search to display.
 grep -C1 fact quote.txt
 ----
 
-[source,bash]
+[source,text]
 ----
 Just thinking about everything I have been through, and how huge it all feels.
 The fact that it is just a small part of something larger

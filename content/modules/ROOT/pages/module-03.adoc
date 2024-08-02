@@ -14,7 +14,7 @@ empty files, or much more.
 find / -name messages
 ----
 
-[source,bash]
+[source,text]
 ----
 /var/log/messages
 ----
@@ -44,7 +44,7 @@ updatedb
 locate messages
 ----
 
-[source,bash]
+[source,text]
 ----
 << OUTPUT ABRIDGED >>
 /usr/share/vim/vim80/syntax/messages.vim
@@ -89,7 +89,7 @@ database:
 locate newFile
 ----
 
-[source,bash]
+[source,text]
 ----
 /root/newFile
 ----

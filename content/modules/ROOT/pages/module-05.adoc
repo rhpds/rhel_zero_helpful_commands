@@ -14,7 +14,7 @@ format:
 df -h
 ----
 
-[source,bash]
+[source,text]
 ----
 Filesystem      Size  Used Avail Use% Mounted on
 devtmpfs        4.0M     0  4.0M   0% /dev

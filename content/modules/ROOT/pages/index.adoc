@@ -8,7 +8,7 @@ The first step towards modifying files is knowing which files exist. Use
 ls
 ----
 
-[source,bash]
+[source,text]
 ----
 root@bastion:~# ls
 quote.txt
@@ -23,7 +23,7 @@ versatile than that name suggests.
 cat quote.txt
 ----
 
-[source,bash]
+[source,text]
 ----
 Just thinking about everything I have been through, and how huge it all feels.
 The fact that it is just a small part of something larger
@@ -47,7 +47,7 @@ change reflected:
 cat quote.txt
 ----
 
-[source,bash]
+[source,text]
 ----
 Just thinking about everything I have been through, and how huge it all feels.
 The fact that it is just a small part of something larger
