@@ -17,6 +17,7 @@ find / -name messages
 [source,text]
 ----
 /var/log/messages
+/usr/lib/python3.9/site-packages/babel/messages
 ----
 
 The output is the full path to the file. If there are multiple matches,
@@ -27,7 +28,7 @@ search through countless directories, you can quickly locate the file.
 ____
 _Note:_ An in-depth explanation of using `+find+` to sort by file
 permissions is included in the
-https://lab.redhat.com/file-permissions[File Permissions Basics lab].
+https://lab.redhat.com/file-permissions[File Permissions Basics lab,window=read-later].
 ____
 
 `+find+` can be input/output intensive, which can sap system resources,
@@ -73,6 +74,7 @@ locate newFile
 ----
 
 There will be no output, as _newFile_ is not in the `+locate+` database.
+
 Update the `+locate+` database again using the `+updatedb+` command:
 
 [source,bash,role=execute]

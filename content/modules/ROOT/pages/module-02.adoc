@@ -48,8 +48,9 @@ Jun 18 11:23:05 localhost systemd[1]: run-credentials-systemd\x2dtmpfiles\x2dcle
 
 Enter Ctrl-c to break out of this stream.
 
-The `logger` utility will write to this _messages_ log. From the original terminal,
-write to this log:
+The `logger` utility will write to this _messages_ log.
+
+Execute the command below to add an entry to /var/log/messages. You will verify it is present directly after.
 
 [source,bash,role=execute]
 ----
