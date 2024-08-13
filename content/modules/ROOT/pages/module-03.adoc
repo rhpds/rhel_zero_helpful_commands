@@ -36,11 +36,10 @@ candidate files. In fact, the search above is exactly that kind of
 search, since it is looking for filenames starting from the root
 directory. It will check every single file on the entire system to see
 if it is a match. The `+locate+` command instead queries a database to
-avoid being too I/O intensive. Use `+updatedb+` to immediately build the database.
+avoid being too I/O intensive.
 
 [source,bash,role=execute]
 ----
-updatedb
 locate messages
 ----
 
