@@ -91,4 +91,4 @@ running.
 
 If you want more exercises on this topic, more information on process
 management can be found in the
-https://lab.redhat.com/service-admin[Service Admin Basics lab].
+https://lab.redhat.com/service-admin[Service Admin Basics lab,window=read-later]].
