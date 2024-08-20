@@ -25,11 +25,9 @@ then this output would have multiple lines and it would be up to the
 user to decide which is the appropriate file. Instead of having to
 search through countless directories, you can quickly locate the file.
 
-____
-_Note:_ An in-depth explanation of using `+find+` to sort by file
+NOTE: An in-depth explanation of using `+find+` to sort by file
 permissions is included in the
-https://lab.redhat.com/file-permissions[File Permissions Basics lab,window=read-later].
-____
+https://lab.redhat.com/file-permissions[File Permissions Basics lab^].
 
 `+find+` can be input/output intensive, which can sap system resources,
 especially if you run a search that will scan a large amount of

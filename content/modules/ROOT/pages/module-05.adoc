@@ -46,9 +46,7 @@ such as installing system updates. Therefore, it is very concerning if
 you run `+df+` and discover one of the smaller filesystems is at 80%
 usage.
 
-____
-_NOTE:_ The _tmpfs_ entries are filesystems accessible by the machine
+NOTE: The _tmpfs_ entries are filesystems accessible by the machine
 that are stored in RAM. This means that you don’t have to care as much
 about these filesystems when troubleshooting using `+df+`. A reboot will
 give you a fresh copy of these filesystems.
-____

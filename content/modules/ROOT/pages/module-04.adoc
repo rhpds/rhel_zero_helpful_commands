@@ -54,11 +54,9 @@ The fact that it is just a small part of something larger
 makes it seem more manageable.
 ----
 
-____
-_NOTE:_ If you wish to only display lines after the result, use `+-A+`
+NOTE: If you wish to only display lines after the result, use `+-A+`
 (context __a__fter). For lines before the result, use `+-B+` (context
 __b__efore).
-____
 
 Another way to leverage `+grep+` is by piping the output of another
 command into `+grep+` using the `+|+` operator. This saves you effort if
