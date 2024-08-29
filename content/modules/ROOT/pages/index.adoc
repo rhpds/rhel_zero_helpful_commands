@@ -10,7 +10,6 @@ ls
 
 [source,text]
 ----
-root@bastion:~# ls
 quote.txt
 ----
 
