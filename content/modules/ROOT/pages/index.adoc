@@ -3,11 +3,13 @@
 The first step towards modifying files is knowing which files exist. Use
 `+ls+` to take a look at the contents of the current directory:
 
+.Command
 [source,bash,role=execute]
 ----
 ls
 ----
 
+.Output
 [source,text]
 ----
 quote.txt
@@ -17,11 +19,13 @@ Use the `+cat+` command to quickly check what is in file `+quote.txt+`.
 The `+cat+` command is short for "`concatenate`", but it is much more
 versatile than that name suggests.
 
+.Command
 [source,bash,role=execute]
 ----
 cat quote.txt
 ----
 
+.Output
 [source,text]
 ----
 Just thinking about everything I have been through, and how huge it all feels.
@@ -33,6 +37,7 @@ command. The command below uses the append redirection operator (`+>>+`)
 to cause the output of the `+echo+` command to be written to the end of
 the file _quote.txt_.
 
+.Command
 [source,bash,role=execute]
 ----
 echo "makes it seem more manageable." >> quote.txt
@@ -41,11 +46,13 @@ echo "makes it seem more manageable." >> quote.txt
 There is no output, so view the file contents once again to see this
 change reflected:
 
+.Command
 [source,bash,role=execute]
 ----
 cat quote.txt
 ----
 
+.Output
 [source,text]
 ----
 Just thinking about everything I have been through, and how huge it all feels.

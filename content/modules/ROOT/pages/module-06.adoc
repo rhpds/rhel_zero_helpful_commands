@@ -7,11 +7,13 @@ running in the current shell. To see all of the processes running on the
 system and present them in a user-readable format, it is common to add
 the `+aux+` options to `+ps+`.
 
+.Command
 [source,bash,role=execute]
 ----
 ps aux
 ----
 
+.Output
 [source,text]
 ----
 root           1  0.3  0.4 173728 17912 ?        Ss   11:08   0:08 /usr/lib/systemd/systemd --system --deserialize 30
@@ -38,11 +40,13 @@ operator (`+|+`), pipe the output of `+ps aux+` into the `+grep+`
 command to search for a specific process. Search for the `+sshd+`
 process.:
 
+.Command
 [source,bash,role=execute]
 ----
 ps aux | grep sshd
 ----
 
+.Output
 [source,text]
 ----
 root       27619  0.0  0.2  15784  9292 ?        Ss   11:13   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
@@ -60,11 +64,13 @@ keeps updating this information in real time. `+top+` does just that.
 NOTE: The below command will continue updating until you quit `+top+`. To quit
 `+top+` press `+q+`.
 
+.Command
 [source,bash,role=execute]
 ----
 top
 ----
 
+.Output
 [source,text]
 ----
 top - 11:57:25 up 49 min,  2 users,  load average: 0.00, 0.00, 0.01

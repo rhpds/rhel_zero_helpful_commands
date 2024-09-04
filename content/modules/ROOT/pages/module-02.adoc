@@ -8,11 +8,13 @@ Since `+tail+` only displays the last ten lines of a file, it is
 particularly useful for viewing recent entries in log files. Take a look
 at the final ten lines of the _boot_ log.
 
+.Command
 [source,bash,role=execute]
 ----
 tail /var/log/audit/audit.log
 ----
 
+.Output
 [source,text]
 ----
 type=SERVICE_START msg=audit(1718709479.839:3949): pid=1 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:init_t:s0 msg='unit=systemd-hostnamed comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'UID="root" AUID="unset"
@@ -31,11 +33,13 @@ If you wish to then see the entire file, a text viewer like `+less+` or
 Adding the `+-f+` option will follow the log file so that you can see
 new entries.
 
+.Command
 [source,bash,role=execute]
 ----
 tail -f /var/log/messages
 ----
 
+.Output
 [source,text]
 ----
 << OUTPUT ABRIDGED >>
@@ -52,6 +56,7 @@ The `logger` utility will write to this _messages_ log.
 
 Execute the command below to add an entry to /var/log/messages. You will verify it is present directly after.
 
+.Command
 [source,bash,role=execute]
 ----
 logger Hello World
@@ -59,11 +64,13 @@ logger Hello World
 
 Check that this message was recorded.
 
+.Command
 [source,bash,role=execute]
 ----
 tail /var/log/messages
 ----
 
+.Output
 [source,text]
 ----
 Jun 18 11:23:05 localhost systemd[1]: Finished Automatically configure NetworkManager in cloud.

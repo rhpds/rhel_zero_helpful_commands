@@ -9,11 +9,13 @@ specified criteria. This step will show an example using the filename,
 but you can also use it to look for files with certain permissions,
 empty files, or much more.
 
+.Command
 [source,bash,role=execute]
 ----
 find / -name messages
 ----
 
+.Output
 [source,text]
 ----
 /var/log/messages
@@ -37,11 +39,13 @@ directory. It will check every single file on the entire system to see
 if it is a match. The `+locate+` command instead queries a database to
 avoid being too I/O intensive.
 
+.Command
 [source,bash,role=execute]
 ----
 locate messages
 ----
 
+.Output
 [source,text]
 ----
 << OUTPUT ABRIDGED >>
@@ -59,6 +63,7 @@ database.
 
 Create a new file with `+touch+`:
 
+.Command
 [source,bash,role=execute]
 ----
 touch newFile
@@ -66,6 +71,7 @@ touch newFile
 
 Try to find this newly created file using `+locate+`:
 
+.Command
 [source,bash,role=execute]
 ----
 locate newFile
@@ -75,6 +81,7 @@ There will be no output, as _newFile_ is not in the `+locate+` database.
 
 Update the `+locate+` database again using the `+updatedb+` command:
 
+.Command
 [source,bash,role=execute]
 ----
 updatedb
@@ -83,11 +90,13 @@ updatedb
 Re-run the `+locate+` command to look through the newly updated
 database:
 
+.Command
 [source,bash,role=execute]
 ----
 locate newFile
 ----
 
+.Output
 [source,text]
 ----
 /root/newFile

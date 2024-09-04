@@ -4,6 +4,7 @@ Processes require memory to run, so when the system is running low on
 free memory it can slow down significantly. The `+free+` command is
 useful for quickly getting a summary of memory usage.
 
+.Command
 [source,bash,role=execute]
 ----
 free -h
@@ -11,6 +12,7 @@ free -h
 
 The `+-h+` option outputs the information in a human-readable format.
 
+.Output
 [source,text]
 ----
       total  used   free   shared  buff/cache  available
@@ -21,11 +23,13 @@ Swap: 0B     0B     0B
 Let’s launch `+top+` again but this time we’ll run it in the background
 by adding a `+&+`.
 
+.Command
 [source,bash,role=execute]
 ----
 top &
 ----
 
+.Output
 [source,text]
 ----
 top &
@@ -36,11 +40,13 @@ If the available memory is very low, the fourth column of `+ps au+` can
 be used for finding which processes are the culprits. To sort the output
 by memory usage, add the `+--sort=-%mem+` option:
 
+.Command
 [source,bash,role=execute]
 ----
 ps au --sort=-%mem
 ----
 
+.Output
 [source,text]
 ----
 ps -au --sort=-%mem
@@ -60,6 +66,7 @@ to use the `+kill+` command. The process ID shown in the `+ps+` output
 is how you refer to the process when killing it. Kill the `+top+`
 process from this terminal:
 
+.Command
 [source,bash,role=execute]
 ----
 kill $(pidof top)
@@ -67,6 +74,7 @@ kill $(pidof top)
 
 Here’s what you should see in the terminal.
 
+.Output
 [source,text]
 ----
 root@bastion:~# ps -au

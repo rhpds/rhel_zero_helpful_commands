@@ -9,11 +9,13 @@ The `+df+` command, short for "`disk free`", shows a breakdown of disk
 usage. The `+-h+` option will present the sizes in a human readable
 format:
 
+.Command
 [source,bash,role=execute]
 ----
 df -h
 ----
 
+.Output
 [source,text]
 ----
 Filesystem      Size  Used Avail Use% Mounted on
