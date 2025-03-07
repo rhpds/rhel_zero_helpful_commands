@@ -88,8 +88,7 @@ Here’s what you should see in the terminal.
 root       34546  0.0  0.0   9988  3456 pts/2    T    18:37   0:00 top
 ----
 
-This does not show any output, but you can see that `+top+` is no longer
-running.
+You can see that `+top+` is no longer running as the resources are `0.0`.
 
 If you want more exercises on this topic, more information on process
 management can be found in the
