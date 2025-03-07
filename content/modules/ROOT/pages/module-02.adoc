@@ -50,7 +50,7 @@ Jun 18 11:23:05 localhost systemd[30111]: Finished Cleanup of User's Temporary F
 Jun 18 11:23:05 localhost systemd[1]: run-credentials-systemd\x2dtmpfiles\x2dclean.service.mount: Deactivated successfully.
 ----
 
-Enter Ctrl-c to break out of this stream.
+Enter kbd:[CTRL+C] to break out of this stream.
 
 The `logger` utility will write to this _messages_ log.
 
@@ -60,6 +60,13 @@ Execute the command below to add an entry to /var/log/messages. You will verify 
 [source,bash,role=execute]
 ----
 logger Hello World
+----
+
+.Output
+[source,bash]
+----
+[root@rhel ~]# logger Hello World
+[root@rhel ~]#
 ----
 
 Check that this message was recorded.
