@@ -69,12 +69,7 @@ Create a new file with `+touch+`:
 touch newFile
 ----
 
-.Output
-[source,text]
-----
-[root@rhel ~]# touch newFile
-[root@rhel ~]#
-----
+This command has no expected output.
 
 Try to find this newly created file using `+locate+`:
 
@@ -86,13 +81,6 @@ locate newFile
 
 There will be no output, as _newFile_ is not in the `+locate+` database.
 
-.Output
-[source,text]
-----
-[root@rhel ~]# locate newFile
-[root@rhel ~]#
-----
-
 Update the `+locate+` database again using the `+updatedb+` command:
 
 .Command
@@ -101,12 +89,7 @@ Update the `+locate+` database again using the `+updatedb+` command:
 updatedb
 ----
 
-.Output
-[source,text]
-----
-[root@rhel ~]# updatedb
-[root@rhel ~]#
-----
+This command has no expected output.
 
 Re-run the `+locate+` command to look through the newly updated
 database:

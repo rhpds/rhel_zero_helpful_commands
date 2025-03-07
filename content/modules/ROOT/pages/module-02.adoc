@@ -62,14 +62,9 @@ Execute the command below to add an entry to /var/log/messages. You will verify 
 logger Hello World
 ----
 
-.Output
-[source,bash]
-----
-[root@rhel ~]# logger Hello World
-[root@rhel ~]#
-----
+This command has no expected output.
 
-Check that this message was recorded.
+Confirm the message was recorded in `+var/log/messages+`.
 
 .Command
 [source,bash,role=execute]
